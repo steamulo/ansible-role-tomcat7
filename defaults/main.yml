@@ -1,0 +1,11 @@
+---
+
+tomcatAdminUsername: tomcat
+tomcatAdminPassword: ""
+tomcatCatalinaBase: /usr/share/tomcat
+tomcatCatalinaHome: /usr/share/tomcat
+tomcatUser: tomcat
+tomcatAjpPort: 8009
+tomcatHttpPort: 8080
+tomcatHttpsPort: 8443
+skipApplicationLink: false

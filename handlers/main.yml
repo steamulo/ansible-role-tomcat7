@@ -1,0 +1,13 @@
+---
+# steamengine/handlers/main.yml
+
+  - name: stop tomcat
+    service: name=tomcat state=stopped
+
+  - name: start tomcat
+    service: name=tomcat state=started
+
+  - name: restart tomcat 
+    service: name=tomcat state=restarted
+
+
