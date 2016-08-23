@@ -9,3 +9,4 @@ tomcatAjpPort: 8009
 tomcatHttpPort: 8080
 tomcatHttpsPort: 8443
 skipApplicationLink: false
+tomcatUseService: true

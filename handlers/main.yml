@@ -3,11 +3,14 @@
 
   - name: stop tomcat
     service: name=tomcat state=stopped
+    when: tomcatUseService
 
   - name: start tomcat
     service: name=tomcat state=started
+    when: tomcatUseService
 
   - name: restart tomcat 
     service: name=tomcat state=restarted
+    when: tomcatUseService
 
 
