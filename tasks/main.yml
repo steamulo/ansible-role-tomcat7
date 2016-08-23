@@ -1,9 +1,9 @@
 ---
-  - name: add group "{{ tomcatUser }}"
+  - name: add group {{ tomcatUser }}
     group: name="{{ tomcatUser }}"
 
-  - name: add user "{{ tomcatUser }}"
-    user: name="{{ tomcatUser }}" group="{{ tomcatUser }}" home="{{ tomcatCatalinaBase }}"
+  - name: Create user {{ tomcatUser }} and add to {{ tomcatUser }}
+    user: name="{{ tomcatUser }}" group="{{ tomcatUser }}"
     become: True
 
   - name: delete home dir for symlink of tomcat
@@ -34,16 +34,15 @@
     template: src=tomcat-users.xml dest="{{ tomcatCatalinaBase }}/conf/"
     notify: restart tomcat
 
-  - name: Add steamulo to tomcat group
-    action: user name="{{ ssh_account }}" groups="users,sudo,{{ tomcatUser }}" append=yes  
-
   - name: Install Tomcat init script
-    copy: src=tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
+    template: src=tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
 
-  - name: "Delete Tomcat ROOT webapp folder"
+  - name: Delete Tomcat ROOT webapp folder
     file: path="{{ tomcatCatalinaBase }}/webapps/ROOT" state=absent
 
   - name: Link application to Tomcat webapps
     file: src="{{ homeDir }}/projectroot" dest="{{ tomcatCatalinaBase }}/webapps/ROOT" state=link force=yes
     when: homeDir is defined and not skipApplicationLink
 
+  - name: Set tomcat service according to {{ tomcatUseService }}
+    service: name=tomcat enabled="{{ tomcatUseService | ternary('yes','no')}}"
