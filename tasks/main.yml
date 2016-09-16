@@ -27,8 +27,8 @@
   - name: Change ownership and rights of Tomcat installation in {{ tomcatCatalinaBase }}
     file: path="{{ tomcatCatalinaBase }}{{ item.path }}" owner="{{ tomcatUser }}" group="{{ tomcatUser }}" state=directory mode="{{ item.mode }}" recurse=yes
     with_items:
-      - { path: '/', mode: 770 }
-      - { path: '/logs', mode: 775 }
+      - { path: '/', mode: 750 }
+      - { path: '/logs', mode: 755 }
     become: True
 
 # Configure Tomcat server and service
