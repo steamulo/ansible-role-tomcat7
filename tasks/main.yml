@@ -1,30 +1,37 @@
 ---
+
+# Users work
   - name: add group "{{ tomcatUser }}"
     group: name="{{ tomcatUser }}"
 
-  - name: add user "{{ tomcatUser }}"
-    user: name="{{ tomcatUser }}" group="{{ tomcatUser }}" home="{{ tomcatCatalinaBase }}"
+  - name: Create user "{{ tomcatUser }}" and add to "{{ tomcatUser }}" group
+    user: name="{{ tomcatUser }}" group="{{ tomcatUser }}"
     become: True
 
-  - name: delete home dir for symlink of tomcat
-    shell: "rm -fr {{ tomcatCatalinaBase }}"
-    become: True
+# Download Tomcat package
 
-  - name: Download Tomcat
-    get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.56/bin/apache-tomcat-7.0.56.tar.gz dest=/opt/apache-tomcat-7.0.56.tar.gz
+  - name: Ensure unzip is installed
+    apt: pkg=unzip state=present
 
-  - name: Extract archive
-    command: chdir=/usr/share /bin/tar xvf /opt/apache-tomcat-7.0.56.tar.gz -C /opt/ creates=/opt/apache-tomcat-7.0.56
+  - name: Ensure dir "/opt/{{ tomcatServiceName }}" exists
+    file: path="/opt/{{ tomcatServiceName }}" state=directory owner="{{ tomcatUser }}" group="{{ tomcatUser }}" recurse=yes
 
-  - name: Symlink install directory
-    file: src=/opt/apache-tomcat-7.0.56 path="{{ tomcatCatalinaBase }}" state=link
+  - name: Download Tomcat from "{{ tomcatZip }}" and unzip archive to "/opt/{{ tomcatServiceName }}"
+    unarchive: src="{{ tomcatZip }}" dest="/opt/{{ tomcatServiceName }}" remote_src=yes copy=no creates="/opt/{{ tomcatServiceName }}/conf/server.xml"
 
-  - name: Change ownership and rights of Tomcat installation
+# Install Tomcat package
+
+  - name: Symlink install directory /opt/{{ tomcatServiceName }} to {{ tomcatCatalinaBase }}
+    file: src="/opt/{{ tomcatServiceName }}" path="{{ tomcatCatalinaBase }}" state=link
+
+  - name: Change ownership and rights of Tomcat installation in {{ tomcatCatalinaBase }}
     file: path="{{ tomcatCatalinaBase }}{{ item.path }}" owner="{{ tomcatUser }}" group="{{ tomcatUser }}" state=directory mode="{{ item.mode }}" recurse=yes
     with_items:
       - { path: '/', mode: 770 }
       - { path: '/logs', mode: 775 }
     become: True
+
+# Configure Tomcat server and service
 
   - name: Configure Tomcat server
     template: src=server.xml dest="{{ tomcatCatalinaBase }}/conf/"
@@ -34,16 +41,15 @@
     template: src=tomcat-users.xml dest="{{ tomcatCatalinaBase }}/conf/"
     notify: restart tomcat
 
-  - name: Add steamulo to tomcat group
-    action: user name="{{ ssh_account }}" groups="users,sudo,{{ tomcatUser }}" append=yes  
-
   - name: Install Tomcat init script
-    copy: src=tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
+    template: src=tomcat-initscript.sh dest="/etc/init.d/{{ tomcatServiceName }}" mode=0755
 
-  - name: "Delete Tomcat ROOT webapp folder"
+  - name: Delete Tomcat ROOT webapp folder
     file: path="{{ tomcatCatalinaBase }}/webapps/ROOT" state=absent
 
   - name: Link application to Tomcat webapps
-    file: src="{{ homeDir }}/projectroot" dest="{{ tomcatCatalinaBase }}/webapps/ROOT" state=link force=yes
-    when: homeDir is defined and not skipApplicationLink
+    file: src="{{ tomcatApplicationRoot }}" dest="{{ tomcatCatalinaBase }}/webapps/ROOT" state=link force=yes
+    when: tomcatApplicationRoot is defined
 
+  - name: Set tomcat service according to {{ tomcatUseService }}
+    service: name=tomcat enabled="{{ tomcatUseService | ternary('yes','no')}}" 

@@ -1,11 +1,16 @@
 ---
 
 tomcatAdminUsername: tomcat
-tomcatAdminPassword: ""
-tomcatCatalinaBase: /usr/share/tomcat
-tomcatCatalinaHome: /usr/share/tomcat
+tomcatAdminPassword: steamulo
+tomcatServiceName: tomcat
+tomcatCatalinaBase: "/usr/share/{{ tomcatServiceName }}"
+tomcatCatalinaHome: "/usr/share/{{ tomcatServiceName }}"
 tomcatUser: tomcat
 tomcatAjpPort: 8009
 tomcatHttpPort: 8080
 tomcatHttpsPort: 8443
-skipApplicationLink: false
+tomcatServerPort: 8005
+
+tomcatUseService: true
+
+tomcatZip: https://s3-eu-west-1.amazonaws.com/steamansible-resources/tomcat/apache-tomcat-7.0.56.zip
