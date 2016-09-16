@@ -11,6 +11,6 @@ tomcatHttpPort: 8080
 tomcatHttpsPort: 8443
 tomcatServerPort: 8005
 
-jbossUseService: true
+tomcatUseService: true
 
 tomcatZip: https://s3-eu-west-1.amazonaws.com/steamansible-resources/tomcat/apache-tomcat-7.0.56.zip

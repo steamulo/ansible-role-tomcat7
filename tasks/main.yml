@@ -51,3 +51,5 @@
     file: src="{{ tomcatApplicationRoot }}" dest="{{ tomcatCatalinaBase }}/webapps/ROOT" state=link force=yes
     when: tomcatApplicationRoot is defined
 
+  - name: Set tomcat service according to {{ tomcatUseService }}
+    service: name=tomcat enabled="{{ tomcatUseService | ternary('yes','no')}}" 

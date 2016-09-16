@@ -3,11 +3,12 @@
 
   - name: stop tomcat
     service: name=tomcat state=stopped
+    when: tomcatUseService
 
   - name: start tomcat
     service: name=tomcat state=started
-    when: jbossUseService
+    when: tomcatUseService
 
   - name: restart tomcat 
     service: name=tomcat state=restarted
-    when: jbossUseService
+    when: tomcatUseService
