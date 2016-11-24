@@ -17,7 +17,7 @@
     file: path="/opt/{{ tomcatServiceName }}" state=directory owner="{{ tomcatUser }}" group="{{ tomcatUser }}" recurse=yes
 
   - name: Download Tomcat from "{{ tomcatZip }}" and unzip archive to "/opt/{{ tomcatServiceName }}"
-    unarchive: src="{{ tomcatZip }}" dest="/opt/{{ tomcatServiceName }}" remote_src=yes copy=no creates="/opt/{{ tomcatServiceName }}/conf/server.xml"
+    unarchive: src="{{ tomcatZip }}" dest="/opt/{{ tomcatServiceName }}" remote_src=yes creates="/opt/{{ tomcatServiceName }}/conf/server.xml"
 
 # Install Tomcat package
 
