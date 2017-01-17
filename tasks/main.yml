@@ -43,6 +43,11 @@
 
   - name: Install Tomcat init script
     template: src=tomcat-initscript.sh dest="/etc/init.d/{{ tomcatServiceName }}" mode=0755
+    when: ansible_distribution_release == "trusty"
+
+  - name: Install Tomcat systemd script
+    template: src=tomcat.service dest="/etc/systemd/system/{{ tomcatServiceName }}.service" mode=0755
+    when: ansible_distribution_release == "xenial"
 
   - name: Delete Tomcat ROOT webapp folder
     file: path="{{ tomcatCatalinaBase }}/webapps/ROOT" state=absent
@@ -52,4 +57,4 @@
     when: tomcatApplicationRoot is defined
 
   - name: Set tomcat service according to {{ tomcatUseService }}
-    service: name=tomcat enabled="{{ tomcatUseService | ternary('yes','no')}}" 
+    service: name=tomcat enabled="{{ tomcatUseService | ternary('yes','no')}}" daemon-reload=yes
