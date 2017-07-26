@@ -1,6 +1,7 @@
 ---
 
 tomcatAccessLogsDirectory: "logs"
+tomcatAccessLogsRotatable: true
 
 tomcatAdminUsername: tomcat
 tomcatAdminPassword: steamulo
