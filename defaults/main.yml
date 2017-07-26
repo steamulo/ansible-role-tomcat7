@@ -1,5 +1,7 @@
 ---
 
+tomcatAccessLogsDirectory: "logs"
+
 tomcatAdminUsername: tomcat
 tomcatAdminPassword: steamulo
 tomcatServiceName: tomcat
