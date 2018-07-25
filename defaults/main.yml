@@ -24,7 +24,9 @@ tomcatServerPort: 8005
 
 tomcatUseService: true
 
-tomcatZip: https://s3-eu-west-1.amazonaws.com/steamansible-resources/tomcat/apache-tomcat-7.0.56.zip
+tomcatVersion: "7.0.90"
+
+tomcatZip: "http://apache.mirrors.ovh.net/ftp.apache.org/dist/tomcat/tomcat-7/v{{ tomcatVersion }}/bin/apache-tomcat-{{ tomcatVersion }}.zip"
 
 tomcat_java_versions:
   - oracle-java8-installer
