@@ -16,6 +16,7 @@ tomcatAdminPassword: steamulo
 tomcatServiceName: tomcat
 tomcatCatalinaBase: "/usr/share/{{ tomcatServiceName }}"
 tomcatCatalinaHome: "/usr/share/{{ tomcatServiceName }}"
+tomcatInstallDir: "/opt/{{ tomcatServiceName }}/apache-tomcat-{{ tomcatVersion }}"
 tomcatUser: tomcat
 tomcatAjpPort: 8009
 tomcatHttpPort: 8080

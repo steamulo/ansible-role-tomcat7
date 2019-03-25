@@ -76,7 +76,8 @@
                acceptorThreadCount="{{ tomcatConnectorAcceptorThreadCount }}"
                maxConnections="{{ tomcatConnectorMaxConnections }}"
                minSpareThreads="{{ tomcatConnectorMinSpareThreads }}"
-               redirectPort="{{ tomcatHttpsPort }}" />
+               redirectPort="{{ tomcatHttpsPort }}"
+               server="Apache Tomcat" />
     <!-- A "Connector" using the shared thread pool-->
     <!--
     <Connector executor="tomcatThreadPool"

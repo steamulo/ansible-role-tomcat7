@@ -17,12 +17,12 @@
     file: path="/opt/{{ tomcatServiceName }}" state=directory owner="{{ tomcatUser }}" group="{{ tomcatUser }}" recurse=yes
 
   - name: Download Tomcat from "{{ tomcatZip }}" and unzip archive to "/opt/{{ tomcatServiceName }}"
-    unarchive: src="{{ tomcatZip }}" dest="/opt/{{ tomcatServiceName }}" remote_src=yes creates="/opt/{{ tomcatServiceName }}/conf/server.xml"
+    unarchive: src="{{ tomcatZip }}" dest="/opt/{{ tomcatServiceName }}" remote_src=yes creates="{{ tomcatInstallDir }}/conf/server.xml"
 
 # Install Tomcat package
 
-  - name: Symlink install directory /opt/{{ tomcatServiceName }} to {{ tomcatCatalinaBase }}
-    file: src="/opt/{{ tomcatServiceName }}" path="{{ tomcatCatalinaBase }}" state=link
+  - name: Symlink install directory {{ tomcatInstallDir }} to {{ tomcatCatalinaBase }}
+    file: src="{{ tomcatInstallDir }}" path="{{ tomcatCatalinaBase }}" state=link
 
   - name: Change ownership and rights of Tomcat installation in {{ tomcatCatalinaBase }}
     file: path="{{ tomcatCatalinaBase }}{{ item.path }}" owner="{{ tomcatUser }}" group="{{ tomcatUser }}" state=directory mode="{{ item.mode }}" recurse=yes
