@@ -69,6 +69,10 @@
          Define a non-SSL HTTP/1.1 Connector on port 8080
     -->
     <Connector port="{{ tomcatHttpPort }}"
+              {% if tomcatHttpPortReverseHttps %}
+              secure="true"
+              scheme="https"
+              {% endif %}
                protocol="{{ tomcatConnectorProtocol }}"
                connectionTimeout="{{ tomcatConnectorConnectionTimeout }}"
                maxThreads="{{ tomcatConnectorMaxThreads }}"

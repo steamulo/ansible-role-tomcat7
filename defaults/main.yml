@@ -31,3 +31,5 @@ tomcatZip: "http://apache.mirrors.ovh.net/ftp.apache.org/dist/tomcat/tomcat-7/v{
 
 tomcat_java_versions:
   - oracle-java8-installer
+
+tomcatHttpPortReverseHttps: false
