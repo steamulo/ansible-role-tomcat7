@@ -29,7 +29,7 @@ tomcatVersion: "7.0.90"
 
 tomcatZip: "http://apache.mirrors.ovh.net/ftp.apache.org/dist/tomcat/tomcat-7/v{{ tomcatVersion }}/bin/apache-tomcat-{{ tomcatVersion }}.zip"
 
-tomcat_java_versions:
-  - oracle-java8-installer
+tomcat_java_path: "https://delivery.steamulo.org/oracle-java/jdk-{{ tomcat_java_build_version }}-linux-x64.tar.gz"
+tomcat_java_build_version: "8u211"
 
 tomcatHttpPortReverseHttps: false

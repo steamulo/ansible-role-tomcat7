@@ -14,8 +14,11 @@ galaxy_info:
   categories:
     - web
 
+
 dependencies:
-  - src: https://github.com/STEAMULO/ansible-role-java.git
-    version: v01.00.001
-    name: steamulo.java
-    java_versions: "{{ tomcat_java_versions }}"
+  - src: https://github.com/lean-delivery/ansible-role-java.git
+    version: 2.1.0
+    name: lean_delivery.java
+    transport: web
+    transport_web: "{{ tomcat_java_path  }}"
+
