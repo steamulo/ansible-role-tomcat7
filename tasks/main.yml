@@ -47,7 +47,7 @@
 
   - name: Install Tomcat systemd script
     template: src=tomcat.service dest="/etc/systemd/system/{{ tomcatServiceName }}.service" mode=0755
-    when: ansible_distribution_release == "xenial"
+    when: ansible_distribution_release == "xenial" or ansible_distribution_release == "bionic"
 
   - name: Delete Tomcat ROOT webapp folder
     file: path="{{ tomcatCatalinaBase }}/webapps/ROOT" state=absent
